@@ -2,7 +2,17 @@ import random
 import string
 from random import randint, choice
 from work import time_decorator
+import typing as t
 
+
+def iterate_by(num: t.Iterable[int]) -> None:
+    for n in num:
+        print(n)
+
+
+iterate_by([1, 2, 3, 4])
+iterate_by(range(1_00))
+iterate_by('duck')
 
 class List_for_test:
     def __init__(self, size) -> object:
@@ -62,11 +72,3 @@ def linear_search(data, desired_item):
     return f'there is no {desired_item}'
 
 
-test_data = List_for_test(60)
-l = test_data.nums_random()
-l.sort()
-target = l[random.randint(0, len(l) - 1)]
-print(l)
-print(target)
-print(binary_search(l, target))
-print(linear_search(l, target))

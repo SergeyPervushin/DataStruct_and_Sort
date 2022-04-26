@@ -1,4 +1,6 @@
 from typing import List
+from binary_tree import Tree_node, BST, Binary_tree
+
 
 class ListNode:
     def __init__(self, val=0, next=None):
@@ -31,6 +33,7 @@ class ListNode:
             head = head.next
         return output_list
 
+
 """ три функции: 
     one_step_bit_divide(),
     sign_define()
@@ -38,11 +41,11 @@ class ListNode:
     являются вспомогательными для метода divide класса Solution
     """
 
+
 # _____________________________________________________________
 
 
 def one_step_bit_divide(temp_bit_dividend, bit_divisor):
-
     remainder = int(temp_bit_dividend, 2) - int(bit_divisor, 2)
     if remainder == 0:
         return ''
@@ -59,14 +62,15 @@ def sign_define(n_1, n_2, unsigned_answer):
 
 
 def check_limits(num):
-    if num < -2**31:
+    if num < -2 ** 31:
         return -2 ** 31
     elif num > (2 ** 31) - 1:
         return (2 ** 31) - 1
     else:
         return num
-# _____________________________________________________________
 
+
+# _____________________________________________________________
 
 
 class Solution:
@@ -246,5 +250,62 @@ class Solution:
 
         return ListNode.linkedList_to_list(output)
 
+    def searchBST(self, root, val: int):
+        if not root:
+            return None
+        elif root.val == val:
+            return root, root.val
+        elif root.val > val:
+            return self.searchBST(root.left, val)
+        else:
+            return self.searchBST(root.right, val)
+
+    def getTargetCopy(self, original: Tree_node, cloned: Tree_node, target: Tree_node) -> int:
+        # my code here)))
+        if cloned.val == target.val:
+            return cloned
+        out = [cloned]
+        h = depth(cloned)
+        for i in range(h):
+            if out[i] is not None:
+                if out[i].val == target.val:
+                    return out[i]
+                out.append(out[i].left)
+                if out[-1] is not None and out[-1].val == target.val:
+                    return out[-1]
+                out.append(out[i].right)
+                if out[-1] is not None and out[-1].val == target.val:
+                    return out[-1]
+            else:
+                continue
+
+    def minOperations(self, boxes: str) -> List[int]:
+        if len(boxes) == 1:
+            return [0]
+        out = []
+        step = 0
+        for i, item in boxes:
+            if item == '1':
+                step += 1
+
+            else:
+                pass
+
+    def singleNumber(self, nums: List[int]) -> int:
+        out = 0
+        for item in nums:
+            out ^= item # разобраться с этим оператором!!!! Не понимаю хоть убей!!!
+        return out
+
+
+def depth(root) -> int:
+    if not root:
+        return 0
+    l_depth = depth(root.left)
+    r_depth = depth(root.right)
+    return max(l_depth, r_depth) + 1  # нужна максимальная глубина (плюс корень)
+
 
 a = Solution()
+
+

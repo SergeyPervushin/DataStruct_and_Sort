@@ -1,73 +1,141 @@
+from typing import List
+
 
 class Tree_node:
-    def __init__(self, key, val, left=None, right=None, parent=None):
-        self.key = key
+    """ Base class for create binary tree root"""
+
+    def __init__(self, val=0, left=None, right=None):
         self.val = val
-        self.leftChild = left
-        self.rightChild = right
-        self.parent = parent
+        self.left = left
+        self.right = right
 
-    def has_left_child(self):
-        return self.leftChild
-
-    def has_right_child(self):
-        return self.rightChild
-
-    def is_left_child(self):
-        return self.parent and self.parent.leftChild == self
-
-    def is_right_child(self):
-        return self.parent and self.parent.rightChild == self
-
-    def is_root(self):
-        return not self.parent
-
-    def is_leaf(self):
-        return not (self.leftChild or self.rightChild)
-
-    def has_any_children(self):
-        return self.rightChild or self.leftChild
-
-    def hes_both_children(self):
-        return self.leftChild and self.rightChild
-
-    def replace_node_data(self, key, value, lc, rc):
-        self.key = key
-        self.val = value
-        self.leftChild = lc
-        self.rightChild = rc
-        if self.has_left_child():   # for delete function
-            self.leftChild.parent = self
-        if self.has_right_child():   # for delete function too
-            self.rightChild.parent = self
+    def __str__(self):
+        return str(self.val)  # закомментировать этот метод после отладки кода(или удалить)!!!
 
 
-class BinarySearchTree:
-    def __init__(self):
-        self.root = None
-        self.size = 0
+class Binary_tree(Tree_node):
+    """ Base binary tree class"""
 
-    def length(self):
-        return self.size
-
-    def __len__(self):
-        return self.size
-
-    def __iter__(self):
-        return self.root.__iter__()
-
-    def put(self, key, val):
-        if self.root:
-            self._put(key, val, self.root)
-
-    def _put(self, key, val, current_node):
-        if key < current_node.key:
-            if current_node.has_left_child():
-                self._put(key, val, current_node.leftChild)
+    def insert(self, data):
+        root = self
+        query = [root]  # очередь для хранения узлов дерева
+        while query:
+            current = query.pop(0)
+            if current.left is None:
+                current.left = data
+                return
             else:
-                current_node.leftChild = Tree_node(key, val, parent=current_node)
+                query.append(current.left)
+
+            if current.right is None:
+                current.right = data
+                return
+            else:
+                query.append(current.right)
+
+    @staticmethod
+    def create_from_list(array: List):
+        """
+        Build simply binary tree from list as like in Leetcode tasks
+        first element of array is root, returns TreeNode(list[0])
+        """
+        if len(array) == 0:
+            return f'There is no data for build binary tree'
+
+        out_tree = Binary_tree(array[0])
+        for item in array[1:]:
+            item = Tree_node(item)
+            out_tree.insert(item)
+
+        return out_tree
+
+    @staticmethod
+    def depth(root) -> int:
+        if not root:
+            return 0
+        l_depth = Binary_tree.depth(root.left)
+        r_depth = Binary_tree.depth(root.right)
+        return max(l_depth, r_depth) + 1    # нужна максимальная глубина (плюс корень)
+
+    @staticmethod
+    def convert_to_list(root) -> List:
+        """ Convert back to list for checking before pushing to Leetcode"""
+        out = [root]
+        if root.left is None and root.right is None:
+            return out
+        steps = Binary_tree.depth(root)
+        for i in range(steps):
+            if out[i] is not None:
+                out.append(out[i].left)
+                out.append(out[i].right)
+            else:
+                continue
+        return out
+
+
+class BST(Tree_node):
+    """ Binary search tree class"""
+
+    @staticmethod
+    def make_instance(data):
+        if not isinstance(data, Tree_node):
+            return Tree_node(data)
+
+    @staticmethod
+    def insert(root: Tree_node, new_node: Tree_node):
+
+        if root is not None:
+            if new_node.val < root.val:
+                if root.left is not None:
+                    BST.insert(root.left, new_node)
+                else:
+                    root.left = new_node
+            else:
+                if root.right is not None:
+                    BST.insert(root.right, new_node)
+                else:
+                    root.right = new_node
         else:
-            if current_node.has_right_child():
-                self._put(key, val, current_node.rightChild)
-            else:
-                current_node.rightChild = Tree_node(key, val, parent=current_node)
+            root = new_node
+
+    @staticmethod
+    def list_to_BST(array):
+        out = BST(array[0])
+        for item in array[1:]:
+            BST.insert(out, BST(item))
+        return out
+
+    @staticmethod
+    def pre_order(root):
+        if root:
+            print(root.val)
+            BST.pre_order(root.left)
+            BST.pre_order(root.right)
+
+    @staticmethod
+    def post_order(root):
+        if root:
+            BST.post_order(root.left)
+            BST.post_order(root.right)
+            print(root.val)
+
+    @staticmethod
+    def in_order(root):
+        if root:
+            BST.in_order(root.left)
+            print(root.val)
+            BST.in_order(root.right)
+
+    @staticmethod
+    def breadth_first_order(root):
+        pass
+
+
+'''Hand test for BST class'''
+nums = [7,4,3,None,None,6,19]
+# tree = BST.list_to_BST(nums)
+
+x = Binary_tree(10)
+y = Binary_tree.create_from_list(nums)
+
+
