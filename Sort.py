@@ -1,4 +1,4 @@
-import random
+
 import string
 from random import randint, choice
 from work import time_decorator
@@ -13,6 +13,7 @@ def iterate_by(num: t.Iterable[int]) -> None:
 iterate_by([1, 2, 3, 4])
 iterate_by(range(1_00))
 iterate_by('duck')
+
 
 class List_for_test:
     def __init__(self, size) -> object:

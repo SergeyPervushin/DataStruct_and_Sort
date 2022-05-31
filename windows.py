@@ -62,33 +62,3 @@ class Binary_tree:
         self.window.title('Binary tree')
         self.window.geometry('300x300')
 
-
-# root = Tk()
-# root.geometry('1000x500')
-# root.title('Data struct Creator')
-#
-#
-# main_menu = Menu(root)
-# root.config(menu=main_menu)
-#
-# file_menu = Menu(main_menu, tearoff=0)
-#
-# new_file_menu = Menu(file_menu, tearoff=0)
-#
-# new_file_menu.add_command(label='Linked List')
-# new_file_menu.add_command(label='Binary Tree')
-# file_menu.add_cascade(label='New', menu=new_file_menu)
-#
-# file_menu.add_command(label='Save')
-# file_menu.add_command(label='Load')
-#
-# tools_menu = Menu(main_menu, tearoff=0)
-#
-# help_menu = Menu(main_menu, tearoff=0)
-# help_menu.add_command(label='Description')
-# help_menu.add_command(label='Licence')
-#
-# main_menu.add_cascade(label='File', menu=file_menu)
-# main_menu.add_cascade(label='Tools', menu=tools_menu)
-# main_menu.add_cascade(label='Help', menu=help_menu)
-# root.mainloop()

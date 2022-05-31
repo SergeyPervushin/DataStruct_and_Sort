@@ -294,8 +294,23 @@ class Solution:
     def singleNumber(self, nums: List[int]) -> int:
         out = 0
         for item in nums:
-            out ^= item # разобраться с этим оператором!!!! Не понимаю хоть убей!!!
+            out ^= item  # разобраться с этим оператором!!!! Не понимаю хоть убей!!!
         return out
+
+    def countPoints(self, points: List[List[int]], queries: List[List[int]]) -> List[int]:
+        out = []
+        for que in queries:
+            counter = 0
+            radius = que[2]
+            for poi in points:
+                if ((poi[0] - que[0]) ** 2 + (poi[1] - que[1]) ** 2) ** 0.5 <= radius:
+                    # эвклидово расстояние центра окружности до точки должно быть не больше радиуса
+                    counter += 1
+            out.append(counter)
+        return out
+
+    def permute(self, nums: List[int]) -> List[List[int]]:
+        pass
 
 
 def depth(root) -> int:
@@ -307,5 +322,6 @@ def depth(root) -> int:
 
 
 a = Solution()
-
-
+points = [[1, 1], [2, 2], [3, 3], [4, 4], [5, 5]]
+queries = [[1, 2, 2], [2, 2, 2], [4, 3, 2], [4, 3, 3]]
+print(a.countPoints(points, queries))

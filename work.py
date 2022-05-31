@@ -1,8 +1,9 @@
+
 import time
 
 
 def transformator_2ES11():
-    """ скрипт для расчета коэффициента трансформации по диапазону напряжений КС"""
+    # коэффициент трансформации по диапазону напряжения КС
     U_1 = [21000, 22000, 25000, 27000, 29000, 30000]
     k_transform = 11
     u_2 = []
@@ -46,6 +47,19 @@ class RC_link_2ES6:
         pass
 
 
+def res_freq(L, C):
+    L_x_C = L * C
+    L_x_C_in_sqr = L_x_C ** 0.5
+    divisor = 3.14 * 2 * L_x_C_in_sqr
+    return 1 / divisor
+
+
+# сопротивление моторно - осевого подшипника ЭС2Г
+def bear_resist(freq):
+    C = 6 * 0.000000001
+    return 1 / (6.28 * freq * C)
+
+
 def my_decorator(func):
     def wrapper(arg_1, arg_2):
         print(f'Something here before func')
@@ -62,4 +76,8 @@ def time_decorator(func):
         t_2 = time.process_time()
         print(t_2 - t_1)
         return res
+
     return wrapper
+
+
+

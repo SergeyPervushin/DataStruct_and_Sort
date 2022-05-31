@@ -15,13 +15,13 @@ from sys import getsizeof
 #         else:
 #             return False
 
-class forward_linked_list_Node:
+class Single_ptr_node:
     def __init__(self, data):
         self.data = data
         self.next = None
 
 
-class doubly_linked_list_Node:
+class Double_ptr_node:
     def __init__(self, data):
         self.data = data
         self.next = None
@@ -29,10 +29,12 @@ class doubly_linked_list_Node:
 
 
 class Forward_List:
-    def __init__(self, head):
-        self.head = head
 
-    def add_to_head(self):
+    def __init__(self, data):
+        self.head = Single_ptr_node(data)
+
+    def add_to_head(self, data):
+
         pass
 
     def add_to_end(self):
