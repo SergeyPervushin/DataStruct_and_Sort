@@ -34,8 +34,12 @@ class Forward_List:
         self.head = Single_ptr_node(data)
 
     def add_to_head(self, data):
-
-        pass
+        if self.head is None:
+            self.head = Single_ptr_node(data)
+        else:
+            new_head = Single_ptr_node(data)
+            new_head.next = self.head
+            self.head = new_head
 
     def add_to_end(self):
         pass
